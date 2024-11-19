@@ -1,0 +1,38 @@
+= Eclipse Compile Error Example
+
+Tested on Linux Mint 22.
+
+openjdk 21.0.5 2024-10-15
+OpenJDK Runtime Environment (build 21.0.5+11-Ubuntu-1ubuntu124.04)
+OpenJDK 64-Bit Server VM (build 21.0.5+11-Ubuntu-1ubuntu124.04, mixed mode, sharing)
+
+Eclipse IDE for Java Developers (includes Incubating components)
+
+Version: 2024-09 (4.33.0)
+Build id: 20240905-0614
+
+maven-3.9.9
+
+
+This example will compile fine with maven and OpenJDK Java compiler.
+But when I try to load it in Eclipse-2024-09, I get this compile error message:
+
+----
+Internal compiler error: java.lang.RuntimeException:
+Internal Error compiling /test/src/org/example/ExampleService.java
+at org.eclipse.jdt.internal.compiler.ProcessTaskManager.compile(ProcessTaskManager.java:167)
+----
+
+
+== Analysis
+
+I have narrowed the problem down to this minimal reproducable example.
+
+My analysis so far showed the problem occurs, if class `RadioChannel`
+implements AutoClosable.
+
+The compile error is shown on line 0 of class `ExampleService`.
+
+However the compile error occurs only when Method
+`ExampleService::compilationFails()` exists in the class (try commenting out).
+
